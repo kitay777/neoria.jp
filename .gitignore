@@ -1,0 +1,10 @@
+app/.DS_Store
+docker/dev.neoria.jp
+
+storage
+
+tests
+.DS_Store
+.env
+docker-compose.yml
+vendor/stripe

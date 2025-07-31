@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="overscroll-none">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
 
 </head>
-<body class="font-sans antialiased min-h-screen bg-gray-100 text-gray-900" x-data="{ open: false }">
+<body class="font-sans antialiased min-h-screen bg-gray-100 text-gray-900" x-data="{ open: false }" class="overscroll-none">
     
     
     <div class="flex flex-col min-h-screen">
@@ -33,15 +33,23 @@
         @endisset
 
         <!-- Main Content -->
-        <main class="flex-1 pb-16">
+        <main class="flex-1 pb-14">
+                @auth
+                @else
                 <div class="w-full">
                     <img src="/imgs/neoriabaner.png" alt="Line Separator" class="w-full">
                 </div>
+                <div class="text-center my-6">
+                    <a href="{{ route('register') }}" class="w-full inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 shadow">
+                        会員登録はこちら
+                    </a>
+                </div>
+                @endauth
             {{ $slot }}
         </main>
         
-        <!-- Fixed Bottom Navigation -->
-        <footer class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-inner z-50">
+        <footer class="fixed bottom-0 left-0 right-0 h-14 bg-white border-t shadow-inner z-50">
+
             <div class="flex justify-around items-center h-14 text-xs text-gray-600">
                 <a href="{{ route('dashboard') }}" class="flex flex-col items-center hover:text-blue-600">
                     <x-heroicon-o-home class="w-6 h-6" />

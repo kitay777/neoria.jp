@@ -82,4 +82,13 @@ class WorkController extends Controller
         $work = Work::with('user', 'category')->findOrFail($id);
         return view('works.show', compact('work'));
     }
+    public function manageShow($id)
+    {
+        $work = Work::with(['category', 'applications.user'])
+            ->where('user_id', Auth::id()) // 自分の仕事だけ見られるように制限
+            ->findOrFail($id);
+
+        return view('works.manage-show', compact('work'));
+    }
+
 }

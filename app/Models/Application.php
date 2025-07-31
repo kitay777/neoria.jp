@@ -27,4 +27,14 @@ class Application extends Model
     {
         return $this->hasOne(PointLog::class);
     }
+    // app/Models/Application.php
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+    public function latestMessage()
+    {
+        return $this->hasOne(Message::class)->latest();
+    }
+
 }

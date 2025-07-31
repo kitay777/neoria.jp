@@ -26,6 +26,11 @@
                     <p class="text-gray-700">{{ Str::limit($work->description, 100) }}</p>
 
                     <div class="mt-2 space-x-2">
+                        @if($work->user == Auth::user())
+                            <a href="{{ route('works.manage.show', $work->id) }}" class="text-indigo-600 hover:underline text-sm">
+                                応募者を確認
+                            </a>
+                        @endif
                         <a href="{{ route('works.show', $work) }}"
                            class="text-blue-600 hover:underline">詳細</a>
 

@@ -39,7 +39,7 @@
                 <div class="w-full">
                     <img src="/imgs/neoriabaner.png" alt="Line Separator" class="w-full">
                 </div>
-                <div class="text-center my-6">
+                <div class="text-center">
                     <a href="{{ route('register') }}" class="w-full inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 shadow">
                         会員登録はこちら
                     </a>

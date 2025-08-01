@@ -15,5 +15,19 @@ class ApplicationController extends Controller
 
         return view('applications.show', compact('application'));
     }
+    public function myApplications()
+    {
+        $applications = Application::with([
+            'work.user', // ← 発注者の情報を取得
+            'work.category',
+            'messages' => fn($q) => $q->latest()->limit(1),
+        ])
+        ->where('user_id', Auth::id())
+        ->latest()
+        ->paginate(10);
+
+        return view('applications.my_applications', compact('applications'));
+    }
+
 }
 

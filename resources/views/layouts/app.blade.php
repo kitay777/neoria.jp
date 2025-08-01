@@ -98,6 +98,7 @@
 
         <div class="p-4 space-y-4">
             <a href="{{ route('profile.edit') }}" class="block text-gray-700 hover:text-blue-600">プロフィール編集</a>
+            <a href="{{ route('applications.mine') }}" class="block text-gray-700 hover:text-blue-600">応募履歴</a>
             <a href="{{ route('works.index') }}" class="block text-gray-700 hover:text-blue-600">仕事一覧</a>
             <a href="{{ route('points.history') }}" class="block text-gray-700 hover:text-blue-600">ポイント履歴</a>
 

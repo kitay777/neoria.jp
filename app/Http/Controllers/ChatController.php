@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Events\MessageSent;
 
 
 class ChatController extends Controller
@@ -29,17 +30,14 @@ class ChatController extends Controller
             'message' => 'required|string|max:1000',
         ]);
 
-        // アクセス制限
-        abort_unless(
-            Auth::id() === $application->user_id || Auth::id() === $application->work->user_id,
-            403
-        );
-
-        $application->messages()->create([
+        $message = $application->messages()->create([
             'user_id' => Auth::id(),
             'message' => $request->message,
         ]);
+        $message->load('user');
 
-        return redirect()->route('chat.with', $application);
+        broadcast(new MessageSent($message))->toOthers();
+
+        return response()->json(['status' => 'sent']);
     }
 }

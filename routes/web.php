@@ -20,6 +20,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ChatController;
 
+// routes/web.php
+Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.mine');
+
 Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->withoutMiddleware(ValidateCsrfToken::class);
 
 Route::middleware(['auth'])->group(function () {

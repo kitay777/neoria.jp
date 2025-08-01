@@ -53,5 +53,9 @@ class User extends Authenticatable
             ? Storage::url($this->profile_photo_path)
             : asset('/imgs/noimage.png');
     }
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 
 }

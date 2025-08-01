@@ -54,6 +54,10 @@
                             <x-dropdown-link :href="route('works.create')" :active="request()->routeIs('works.*')">
                                 仕事を依頼する
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('applications.mine')">
+                                応募履歴
+                            </x-dropdown-link>
+
                             <x-dropdown-link :href="route('works.index')" :active="request()->routeIs('works.*')">
                                 仕事一覧
                             </x-dropdown-link>
@@ -120,6 +124,9 @@
                             {{ __('Log Out') }}
                         </x-responsive-nav-link>
                     </form>
+                    <x-dropdown-link :href="route('applications.mine')">
+                        応募履歴
+                    </x-dropdown-link>
                     <x-responsive-nav-link :href="route('works.index')" :active="request()->routeIs('works.*')">
                         仕事一覧
                     </x-responsive-nav-link>

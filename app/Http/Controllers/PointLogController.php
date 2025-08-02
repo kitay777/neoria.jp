@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\PointLog;
+use Illuminate\Http\Request;
 
 class PointLogController extends Controller
 {

@@ -101,6 +101,7 @@
             <a href="{{ route('applications.mine') }}" class="block text-gray-700 hover:text-blue-600">応募履歴</a>
             <a href="{{ route('works.index') }}" class="block text-gray-700 hover:text-blue-600">仕事一覧</a>
             <a href="{{ route('points.history') }}" class="block text-gray-700 hover:text-blue-600">ポイント履歴</a>
+            <a href="{{ route('points.buy') }}" class="block text-gray-700 hover:text-blue-600">ポイント購入</a>
 
             <!-- ログアウト -->
             <form method="POST" action="{{ route('logout') }}">

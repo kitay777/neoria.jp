@@ -1,4 +1,14 @@
 <x-app-layout>
+    <style>
+        .my-4 {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        hr {
+            height: 1px;
+            background-color: #ccc;
+        }
+    </style>
     <script>
         window.applicationId = {{ $application->id }};
         window.Laravel = {
@@ -13,14 +23,37 @@
     <!-- チャットメッセージ一覧 -->
     <div id="chat-scroll-area" class="p-6 pb-40 space-y-4 max-h-[calc(100vh-10rem)] overflow-y-auto">
         <div id="chat-messages" class="space-y-3">
+        @php
+            $lastDate = null;
+        @endphp
+
         @foreach ($messages->reverse() as $msg)
+            @php
+                $currentDate = $msg->created_at->format('Y-m-d');
+            @endphp
+
+            @if ($currentDate !== $lastDate)
+                <div class="flex justify-center items-center my-4">
+                    <hr class="flex-grow border-t border-gray-300">
+                    <span class="px-3 text-gray-500 text-sm whitespace-nowrap">
+                        {{ \Carbon\Carbon::parse($currentDate)->format('Y年m月d日') }}
+                    </span>
+                    <hr class="flex-grow border-t border-gray-300">
+                </div>
+                @php
+                    $lastDate = $currentDate;
+                @endphp
+            @endif
+
             <div class="flex {{ $msg->user_id === Auth::id() ? 'justify-end' : 'justify-start' }}">
                 <div class="max-w-xs bg-gray-100 rounded px-3 py-2 text-sm text-gray-800">
-                    <strong>{{ $msg->user->name }}:</strong><br>
+                    <strong>{{ $msg->user->name }}</strong>
+                    <span class="text-xs text-gray-500 ml-2">{{ $msg->created_at->format('H:i') }}</span><br>
                     {!! nl2br(e($msg->message)) !!}
                 </div>
             </div>
         @endforeach
+
 
         </div>
     </div>
@@ -74,21 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // Echo（Pusher）リアルタイム受信
     if (window.Echo && window.applicationId) {
         window.Echo.channel('chat.' + window.applicationId)
-            .listen('MessageSent', (e) => {
-                console.log("新しいメッセージ受信:", e);
-                if (e.user.id === window.Laravel.userId) return; // 自分の送信は表示済み
+        .listen('App\\Events\\MessageSent', (e) => {
+            console.log("新しいメッセージ受信:", e);
+            if (e.user.id === window.Laravel.userId) return;
 
-                const wrapper = document.createElement('div');
-                wrapper.className = 'flex justify-start';
+            const timeStr = e.created_at.slice(11, 16); // 'HH:mm'
 
-                const inner = document.createElement('div');
-                inner.className = 'max-w-xs bg-gray-100 rounded px-3 py-2 text-sm text-gray-800';
-                inner.innerHTML = `<strong>${e.user.name}:</strong><br>${e.message.replace(/\n/g, '<br>')}`;
+            const wrapper = document.createElement('div');
+            console.log("time:::", timeStr);
+            wrapper.className = 'flex justify-start';
 
-                //wrapper.appendChild(inner);
-                messages.appendChild(wrapper);
-                chatArea.scrollTop = chatArea.scrollHeight;
-            });
+            const inner = document.createElement('div');
+            inner.className = 'max-w-xs bg-gray-100 rounded px-3 py-2 text-sm text-gray-800';
+            inner.innerHTML = `<strong>${e.user.name}</strong><span class="text-xs text-gray-500 ml-2">${timeStr}</span><br>${e.message.replace(/\n/g, '<br>')}`;
+
+            wrapper.appendChild(inner);
+            messages.appendChild(wrapper);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        });
     }
 
     // 送信処理
@@ -108,11 +144,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ message })
             });
 
-            if (response.ok) {
-                textarea.value = '';
-                textarea.focus();
-                scrollToBottom();
-            } else {
+        if (response.ok) {
+            const now = new Date();
+            const hour = now.getHours().toString().padStart(2, '0');
+            const min = now.getMinutes().toString().padStart(2, '0');
+            const timeStr = `${hour}:${min}`;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex justify-end';
+
+            const inner = document.createElement('div');
+            inner.className = 'max-w-xs bg-gray-100 rounded px-3 py-2 text-sm text-gray-800';
+            inner.innerHTML = `<strong>あなた</strong><span class="text-xs text-gray-500 ml-2">${timeStr}</span><br>${message.replace(/\n/g, '<br>')}`;
+
+            messages.appendChild(wrapper);
+            textarea.value = '';
+            textarea.focus();
+            scrollToBottom();
+        } else {
                 console.error('送信失敗', await response.text());
             }
         } catch (err) {

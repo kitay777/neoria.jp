@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.Echo && window.applicationId) {
         window.Echo.channel('chat.' + window.applicationId)
             .listen('MessageSent', (e) => {
+                console.log("新しいメッセージ受信:", e);
                 if (e.user.id === window.Laravel.userId) return; // 自分の送信は表示済み
 
                 const wrapper = document.createElement('div');

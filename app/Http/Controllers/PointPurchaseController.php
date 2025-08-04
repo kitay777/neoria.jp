@@ -69,6 +69,7 @@ class PointPurchaseController extends Controller
         $user->save();
 
         // ログ保存
+        /* WEBHOOKに対応したのでいらない
         PointLog::create([
             'user_id' => $user->id,
             'amount' => $points,
@@ -76,6 +77,7 @@ class PointPurchaseController extends Controller
             'description' => "Stripeで購入",
             'balance' => $user->points,
         ]);
+        */
 
         return view('points.success', compact('points'));
     }

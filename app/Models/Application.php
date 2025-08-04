@@ -11,6 +11,7 @@ class Application extends Model
         'user_id',
         'status',
         'message',
+        'offer_price',
     ];
 
     public function work()

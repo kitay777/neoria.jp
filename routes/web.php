@@ -20,6 +20,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ChatController;
 
+Route::get('/riyou',[MainController::class, 'riyou'])->name('riyou');
+Route::get('/privacy',[MainController::class, 'privacy'])->name('privacy');
+Route::get('/unei',[MainController::class, 'unei'])->name('unei');
 // routes/web.php
 Route::get('/my-applications', [ApplicationController::class, 'myApplications'])->name('applications.mine');
 

@@ -56,7 +56,13 @@
             {{ $work->description }}
         </div>
     </div>
+    @if ($userApplications->isNotEmpty())
+        <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
+            ※すでにこの仕事に申し込んでいます（{{ $userApplications->count() }}件）
+        </div>
+    @endif
     <div class="mt-8 max-w-2xl mx-auto">
+
         <form action="{{ route('works.apply', $work) }}" method="POST">
             @csrf
 
@@ -64,6 +70,30 @@
             <div class="text-sm text-right text-gray-600 mb-2">
                 保有ポイント：<span class="font-bold text-black">{{ Auth::user()->points }}</span> pt
             </div>
+
+            {{-- 提示金額 --}}
+            <label for="offer_price" class="block mt-4 mb-1 font-semibold">提示金額（任意）</label>
+            <input type="number" name="offer_price"
+                value="{{ old('offer_price') }}"
+                class="w-full border rounded-md p-2"
+                placeholder="例：3000">
+
+            @error('offer_price')
+                <p class="text-sm text-red-500">{{ $message }}</p>
+            @enderror
+
+            {{-- 必要ポイント --}}
+
+            {{-- 申込ポイント --}}
+            <label for="application_points" class="block mt-4 mb-1 font-semibold">申込ポイント</label>
+            <input type="hidden" name="application_points"
+                value="{{ old('application_points') }}"
+                class="w-full border rounded-md p-2"
+                placeholder="例：1000">
+
+            @error('application_points')
+                <p class="text-sm text-red-500">{{ $message }}</p>
+            @enderror
 
             {{-- メッセージ --}}
             <label for="message" class="block mb-1 font-semibold">申込メッセージ（任意）</label>
@@ -90,4 +120,38 @@
             @endif
         </form>
     </div>   {{-- ボタン表示（ログインユーザーが申込済みでない想定） --}}
+    @if ($latestApplications->isNotEmpty())
+        <livewire:work-applications-list :work="$work" />
+    @endif
+
+
+
+    @if ($userApplications->isNotEmpty())
+        <div class="mt-6">
+            <h3 class="text-md font-semibold mb-2 text-gray-700">これまでの応募履歴</h3>
+            <ul class="space-y-3 text-sm text-gray-800">
+                @foreach ($userApplications as $app)
+                    <li class="border rounded p-3">
+                        <div class="text-xs text-gray-500 mb-1">
+                            応募日時：{{ $app->created_at->format('Y年m月d日 H:i') }}　
+                            ステータス：{{ $app->status }}
+                            @if ($app->offer_price)
+                                ／ 提示金額：{{ number_format($app->offer_price) }}円
+                            @endif
+                        </div>
+                        <div class="whitespace-pre-line overflow-hidden text-ellipsis text-sm leading-relaxed"
+                            style="-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical;">
+                            {{ $app->message }}
+                        </div>
+
+                    </li>
+                @endforeach
+            </ul>
+            <div class="mt-4">
+                {{ $userApplications->links() }}
+            </div>
+        </div>
+
+
+    @endif
 </x-app-layout>

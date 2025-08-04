@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 
 
@@ -78,10 +80,44 @@ class WorkController extends Controller
 
     }
     
-    public function show($id){
-        $work = Work::with('user', 'category')->findOrFail($id);
-        return view('works.show', compact('work'));
+    public function show(Work $work)
+    {
+        $userApplications = $work->applications()
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->paginate(5, ['*'], 'user_page');
+
+        $latestAll = $work->applications()
+            ->with('user')
+            ->latest()
+            ->get()
+            ->unique('user_id')
+            ->values();
+
+        $perPage = 4;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage('latest_page');
+        $currentItems = $latestAll->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $latestPaginated = new LengthAwarePaginator(
+            $currentItems,
+            $latestAll->count(),
+            $perPage,
+            $currentPage,
+            ['pageName' => 'latest_page']
+        );
+
+        // ✅ pathを明示
+        $latestPaginated->withPath(route('works.show', $work));
+
+        return view('works.show', [
+            'work' => $work,
+            'userApplications' => $userApplications,
+            'latestApplications' => $latestPaginated,
+        ]);
     }
+
+
+
     public function manageShow($id)
     {
         $work = Work::with(['category', 'applications.user'])

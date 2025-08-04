@@ -9,6 +9,7 @@ use Stripe\Checkout\Session;
 use App\Models\User;
 use App\Models\PointLog;
 
+
 class PointPurchaseController extends Controller
 {
     public function index()

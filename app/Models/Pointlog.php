@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PointLog extends Model
 {
+    
     protected $fillable = ['user_id', 'application_id', 'amount', 'type', 'description', 'balance'];
 
     public function user()

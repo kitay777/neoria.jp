@@ -2,8 +2,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex items-center justify-between mb-6">
-    <h2 class="text-2xl font-bold text-gray-800">タイムワーカーマーケット</h2>
-    <a href="{{ route('dashboard') }}"
+    <h2 class="text-2xl font-bold text-gray-800">ジョブマーケット</h2>
+    <a href="{{ route('time-products.market') }}"
        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
         タイムワーカーマーケット →
     </a>

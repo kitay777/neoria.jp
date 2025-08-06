@@ -19,6 +19,16 @@ use App\Http\Controllers\PointLogController;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\TimeProductController;
+
+Route::get('/market', [TimeProductController::class, 'market'])->name('time-products.market');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/time-products', [TimeProductController::class, 'index'])->name('time-products.index');    
+    Route::get('/time-products/create', [TimeProductController::class, 'create'])->name('time-products.create');
+    Route::post('/time-products', [TimeProductController::class, 'store'])->name('time-products.store');
+});
+
 
 Route::get('/riyou',[MainController::class, 'riyou'])->name('riyou');
 Route::get('/privacy',[MainController::class, 'privacy'])->name('privacy');

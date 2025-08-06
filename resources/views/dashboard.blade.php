@@ -58,4 +58,10 @@
 
         </div>
     </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+            <a href="{{ route('riyou') }}" class="block text-gray-700 hover:text-blue-600">利用規約</a>
+            <a href="{{ route('privacy') }}" class="block text-gray-700 hover:text-blue-600">プライバシーポリシー</a>
+            <a href="{{ route('unei') }}" class="block text-gray-700 hover:text-blue-600">特定商取引法に基づく表記</a>
+        
+        </div>
 </x-app-layout>

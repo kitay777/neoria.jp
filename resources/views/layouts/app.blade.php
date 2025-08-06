@@ -98,6 +98,8 @@
         </div>
 
         <div class="p-4 space-y-4">
+            <a href="{{ route('time-products.market') }}" class="text-blue-600 hover:underline">時間商品一覧を見る</a>
+
             <a href="{{ route('profile.edit') }}" class="block text-gray-700 hover:text-blue-600">プロフィール編集</a>
             <a href="{{ route('applications.mine') }}" class="block text-gray-700 hover:text-blue-600">応募履歴</a>
             <a href="{{ route('works.index') }}" class="block text-gray-700 hover:text-blue-600">仕事一覧</a>
@@ -113,7 +115,7 @@
             </form>
             <a href="{{ route('riyou') }}" class="block text-gray-700 hover:text-blue-600">利用規約</a>
             <a href="{{ route('privacy') }}" class="block text-gray-700 hover:text-blue-600">プライバシーポリシー</a>
-            <a href="{{ route('unei') }}" class="block text-gray-700 hover:text-blue-600">運営概要</a>
+            <a href="{{ route('unei') }}" class="block text-gray-700 hover:text-blue-600">特定商取引法に基づく表記</a>
         </div>
     </div>
 @livewireScripts

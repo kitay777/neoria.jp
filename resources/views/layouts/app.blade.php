@@ -64,9 +64,17 @@
                     <x-heroicon-o-plus-circle class="w-6 h-6" />
                     <span>登録</span>
                 </a>
+                <a href="{{ route('time-products.create') }}" class="flex flex-col items-center hover:text-blue-600">
+                    <x-heroicon-o-plus-circle class="w-6 h-6" />
+                    <span>チケット登録</span>
+                </a>
                 <a href="{{ route('works.index') }}" class="flex flex-col items-center hover:text-blue-600">
                     <x-heroicon-o-briefcase class="w-6 h-6" />
                     <span>一覧</span>
+                </a>
+                <a href="{{ route('time-products.index') }}" class="flex flex-col items-center hover:text-blue-600">
+                    <x-heroicon-o-briefcase class="w-6 h-6" />
+                    <span>自分の出品一覧</span>
                 </a>
                 <a href="#" @click="open = true" class="flex flex-col items-center hover:text-blue-600">
                     <x-heroicon-o-user class="w-6 h-6" />
@@ -98,8 +106,9 @@
         </div>
 
         <div class="p-4 space-y-4">
-            <a href="{{ route('time-products.market') }}" class="text-blue-600 hover:underline">時間商品一覧を見る</a>
-
+            <a href="{{ route('time-products.market') }}" class="block text-gray-700 hover:underline">時間商品一覧を見る</a>
+            <a href="{{ route('time-products.index') }}" class="block text-gray-700 hover:underline">自分の出品</a>
+            <a href="{{ route('time-products.create') }}" class="block text-gray-700 hover:underline">商品を出品</a>
             <a href="{{ route('profile.edit') }}" class="block text-gray-700 hover:text-blue-600">プロフィール編集</a>
             <a href="{{ route('applications.mine') }}" class="block text-gray-700 hover:text-blue-600">応募履歴</a>
             <a href="{{ route('works.index') }}" class="block text-gray-700 hover:text-blue-600">仕事一覧</a>

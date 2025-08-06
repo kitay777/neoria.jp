@@ -21,13 +21,19 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TimeProductController;
 
+Route::get('/market/{timeProduct}', [TimeProductController::class, 'show'])->name('time-products.show');
+
 Route::get('/market', [TimeProductController::class, 'market'])->name('time-products.market');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/time-products', [TimeProductController::class, 'index'])->name('time-products.index');    
+    Route::get('/my/time-products', [TimeProductController::class, 'index'])->name('time-products.index');
     Route::get('/time-products/create', [TimeProductController::class, 'create'])->name('time-products.create');
     Route::post('/time-products', [TimeProductController::class, 'store'])->name('time-products.store');
+    Route::get('/time-products/{timeProduct}/edit', [TimeProductController::class, 'edit'])->name('time-products.edit');
+    Route::put('/time-products/{timeProduct}', [TimeProductController::class, 'update'])->name('time-products.update');
+    Route::delete('/time-products/{timeProduct}', [TimeProductController::class, 'destroy'])->name('time-products.destroy');
 });
+
 
 
 Route::get('/riyou',[MainController::class, 'riyou'])->name('riyou');

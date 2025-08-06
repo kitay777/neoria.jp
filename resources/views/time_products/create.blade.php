@@ -36,17 +36,24 @@
 
             {{-- 所要時間 --}}
             <div>
-                <label class="block font-semibold">所要時間（分）</label>
+                <label class="block font-semibold">時間（分）</label>
                 <select name="duration" class="w-full border rounded p-2" required>
+                    <option value="">選択してください</option>
+                    <option value="0">1回</option>
                     <option value="15">15分</option>
                     <option value="30">30分</option>
-                    <option value="60">60分</option>
+                    <option value="60">1時間</option>
+                    <option value="120">2時間</option>
+                    <option value="180">3時間</option>
+                    <option value="1440">1日</option>
+                    <option value="10080">1週間</option>
+                    <option value="43200">1ヶ月</option>
                 </select>
             </div>
 
             {{-- 画像アップロード --}}
             <div>
-                <label class="block font-semibold">画像（任意）</label>
+                <label class="block font-semibold">画像</label>
                 <input type="file" name="image" accept="image/*" class="w-full border rounded p-2">
             </div>
 

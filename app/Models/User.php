@@ -57,5 +57,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Application::class);
     }
+    public function preferredCategories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
 
 }

@@ -11,6 +11,7 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Drivers\Gd\Driver;
 
+
 /**
  * TimeProductController handles the management of time products.
  */
@@ -19,21 +20,38 @@ class TimeProductController extends Controller
 {
     public function index()
     {
-        $products = TimeProduct::with('category')
-            ->where('user_id', auth()->id())
-            ->latest()
-            ->get();
+        $query = TimeProduct::with(['user', 'category'])->where('is_active', true);
 
-        return view('time_products.index', compact('products'));
+if (session()->has('category_filter_ids')) {
+    $categoryIds = session('category_filter_ids');
+    if (!empty($categoryIds)) {
+        $query->whereIn('category_id', $categoryIds);
+    }
+}
+
+        $products = $query->latest()->get();
+        $categories = Category::with('children')->whereNull('parent_id')->get();
+
+
+        return view('time_products.index', compact('products', 'categories'));
     }
     public function market()
     {
-        $products = TimeProduct::with(['user', 'category'])
-            ->where('is_active', true)
-            ->latest()
-            ->get();
+        $query = TimeProduct::with(['user', 'category'])->where('is_active', true);
 
-        return view('time_products.market', compact('products'));
+if (session()->has('category_filter_ids')) {
+    $categoryIds = session('category_filter_ids');
+    if (!empty($categoryIds)) {
+        $query->whereIn('category_id', $categoryIds);
+    }
+}
+
+        $products = $query->latest()->get();
+        $categories = Category::with('children')->whereNull('parent_id')->get();
+
+
+
+        return view('time_products.market', compact('products', 'categories'));
     }
 
 

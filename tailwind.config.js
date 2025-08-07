@@ -14,6 +14,9 @@ export default {
         'border-green-500', 'bg-green-100','bg-green-500',
         'border-yellow-500', 'bg-yellow-100','bg-yellow-500',
         'border-gray-200', 'bg-gray-100','bg-gray-500',
+        'bg-blue-200', 'text-blue-800',
+        'bg-blue-600', 'text-white',
+        'bg-gray-300', 'text-gray-800', 'hover:bg-gray-400',
         // 必要に応じて追加
     ],
     theme: {

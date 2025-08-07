@@ -20,7 +20,12 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TimeProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SessionFilterController;
 
+Route::post('/session/category-filter', [SessionFilterController::class, 'set'])->name('session.setCategoryFilter');
+
+Route::middleware('auth')->post('/user/category-preference', [UserController::class, 'setCategoryPreference'])->name('user.setCategoryPreference');
 Route::get('/market/{timeProduct}', [TimeProductController::class, 'show'])->name('time-products.show');
 
 Route::get('/market', [TimeProductController::class, 'market'])->name('time-products.market');

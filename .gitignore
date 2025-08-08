@@ -9,3 +9,4 @@ tests
 docker-compose.yml
 vendor/stripe
 composer.lock
+docker/mysql

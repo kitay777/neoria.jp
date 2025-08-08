@@ -1,5 +1,5 @@
 <div class="mt-8 max-w-4xl mx-auto">
-    <h3 class="text-lg font-bold mb-4">申込者一覧（最新の申込のみ）</h3>
+    <h3 class="text-lg font-bold mb-4">見積提案者一覧（最新の見積のみ）</h3>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-1">
         @foreach ($latestApplications as $app)

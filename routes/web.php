@@ -81,9 +81,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('works', WorkController::class);
+    Route::resource('works', WorkController::class)->except(['index','show']);
     Route::post('/works', [WorkController::class, 'store'])->name('works.store');
-    Route::get('/works/{work}', [WorkController::class, 'show'])->name('works.show');
     // 自分が出した仕事の詳細＆応募者一覧
     Route::get('/works/manage/{id}', [WorkController::class, 'manageShow'])->name('works.manage.show');
     Route::get('/applications/{application}', [ApplicationController::class, 'show'])->name('applications.show');
@@ -96,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/',[MainController::class, 'index'])->name('dashboard');
 
 Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
+Route::get('/works/{work}', [WorkController::class, 'show'])->name('works.show');
+Route::resource('works', WorkController::class)->only(['index','show']);
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

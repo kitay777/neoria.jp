@@ -28,7 +28,7 @@
                     <div class="mt-2 space-x-2">
                         @if($work->user == Auth::user())
                             <a href="{{ route('works.manage.show', $work->id) }}" class="text-indigo-600 hover:underline text-sm">
-                                応募者を確認
+                                見積提出者を確認
                             </a>
                         @endif
                         <a href="{{ route('works.show', $work) }}"

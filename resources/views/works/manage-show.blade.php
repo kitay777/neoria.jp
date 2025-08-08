@@ -12,7 +12,7 @@
         </div>
 
         <div class="bg-white p-4 rounded shadow mt-6">
-            <h4 class="text-md font-bold mb-2">応募者一覧</h4>
+            <h4 class="text-md font-bold mb-2">見積提出者一覧</h4>
 
             @forelse ($work->applications as $application)
                 <div class="flex justify-between items-center py-2 border-b last:border-0">
@@ -33,7 +33,7 @@
                     <div class="flex gap-2">
                         <a href="{{ route('applications.show', $application->id) }}"
                         class="text-sm bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700">
-                            応募詳細
+                            見積詳細
                         </a>
 
                         <a href="{{ route('chat.with', $application->id) }}"
@@ -44,7 +44,7 @@
 
                 </div>
             @empty
-                <p class="text-sm text-gray-500">まだ応募がありません。</p>
+                <p class="text-sm text-gray-500">まだ見積がありません。</p>
             @endforelse
         </div>
     </div>

@@ -58,17 +58,18 @@
     </div>
     @if ($userApplications->isNotEmpty())
         <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
-            ※すでにこの仕事に申し込んでいます（{{ $userApplications->count() }}件）
+            ※すでにこの仕事に見積もりを出しています（{{ $userApplications->count() }}件）
         </div>
     @endif
     <div class="mt-8 max-w-2xl mx-auto">
 
+        @if(auth()->check())
         <form action="{{ route('works.apply', $work) }}" method="POST">
             @csrf
 
             {{-- 保有ポイント --}}
             <div class="text-sm text-right text-gray-600 mb-2">
-                保有ポイント：<span class="font-bold text-black">{{ Auth::user()->points }}</span> pt
+                    現在の所持ポイント：<span class="font-semibold">{{ number_format(auth()->user()->points) }}</span> pt
             </div>
 
             {{-- 提示金額 --}}
@@ -105,7 +106,16 @@
                     class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
                 この仕事に見積を出す（1000pt消費）
             </button>
-
+            @else
+            <div class="text-red-600 text-sm mb-4">
+                <p>この仕事に見積を出すにはログインが必要です。</p>
+                <p>ログイン後、再度このページにアクセスしてください。</p>
+            </div>
+            <a href="{{ route('login') }}"
+               class="block mt-6 w-full text-center bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700">
+                ログインする
+            </a>    
+            @endif
             {{-- フィードバック --}}
             @if (session('success'))
                 <p class="mt-4 text-green-600">{{ session('success') }}</p>
@@ -123,7 +133,7 @@
 
     @if ($userApplications->isNotEmpty())
         <div class="mt-6">
-            <h3 class="text-md font-semibold mb-2 text-gray-700">これまでの見積履歴</h3>
+            <h3 class="text-md font-semibold mb-2 text-gray-700">あなたの見積履歴</h3>
             <ul class="space-y-3 text-sm text-gray-800">
                 @foreach ($userApplications as $app)
                     <li class="border rounded p-3">

@@ -72,7 +72,7 @@
             </div>
 
             {{-- 提示金額 --}}
-            <label for="offer_price" class="block mt-4 mb-1 font-semibold">提示金額（任意）</label>
+            <label for="offer_price" class="block mt-4 mb-1 font-semibold">見積金額（任意）</label>
             <input type="number" name="offer_price"
                 value="{{ old('offer_price') }}"
                 class="w-full border rounded-md p-2"
@@ -81,11 +81,6 @@
             @error('offer_price')
                 <p class="text-sm text-red-500">{{ $message }}</p>
             @enderror
-
-            {{-- 必要ポイント --}}
-
-            {{-- 申込ポイント --}}
-            <label for="application_points" class="block mt-4 mb-1 font-semibold">申込ポイント</label>
             <input type="hidden" name="application_points"
                 value="{{ old('application_points') }}"
                 class="w-full border rounded-md p-2"
@@ -96,7 +91,7 @@
             @enderror
 
             {{-- メッセージ --}}
-            <label for="message" class="block mb-1 font-semibold">申込メッセージ（任意）</label>
+            <label for="message" class="block mb-1 font-semibold">見積提案メッセージ（任意）</label>
             <textarea name="message" rows="4" maxlength="1024"
                     class="w-full border rounded-md p-2"
                     placeholder="申込にあたってのメッセージを入力">{{ old('message') }}</textarea>
@@ -108,7 +103,7 @@
             {{-- ボタン --}}
             <button type="submit"
                     class="mt-4 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-                この仕事に申し込む（1000pt消費）
+                この仕事に見積を出す（1000pt消費）
             </button>
 
             {{-- フィードバック --}}
@@ -128,7 +123,7 @@
 
     @if ($userApplications->isNotEmpty())
         <div class="mt-6">
-            <h3 class="text-md font-semibold mb-2 text-gray-700">これまでの応募履歴</h3>
+            <h3 class="text-md font-semibold mb-2 text-gray-700">これまでの見積履歴</h3>
             <ul class="space-y-3 text-sm text-gray-800">
                 @foreach ($userApplications as $app)
                     <li class="border rounded p-3">

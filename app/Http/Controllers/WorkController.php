@@ -11,6 +11,9 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Events\WorkCreated;
+use Illuminate\Support\Facades\Log;
+
 
 
 
@@ -61,7 +64,7 @@ class WorkController extends Controller
             $imagePath = $filename;
         }
 
-        Work::create([
+        $work = Work::create([
             'user_id' => auth()->id(),
             'title' => $request->title,
             'description' => $request->description,
@@ -76,9 +79,12 @@ class WorkController extends Controller
             'execution_date' => $request->execution_date,
         ]);
 
+        Log::info('Work作成 → イベント発火直前');
+        event(new WorkCreated($work));
+        Log::info('Work作成 → イベント発火直後');
         return redirect()->route('works.index')->with('success', '仕事を登録しました');
 
-    }
+        }
     
     public function show(Work $work)
     {

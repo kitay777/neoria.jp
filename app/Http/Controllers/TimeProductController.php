@@ -20,14 +20,14 @@ class TimeProductController extends Controller
 {
     public function index()
     {
-        $query = TimeProduct::with(['user', 'category'])->where('is_active', true);
+        $query = TimeProduct::with(['user', 'category'])->where('user_id', auth()->id());;
 
-if (session()->has('category_filter_ids')) {
-    $categoryIds = session('category_filter_ids');
-    if (!empty($categoryIds)) {
-        $query->whereIn('category_id', $categoryIds);
-    }
-}
+        if (session()->has('category_filter_ids')) {
+            $categoryIds = session('category_filter_ids');
+            if (!empty($categoryIds)) {
+                $query->whereIn('category_id', $categoryIds);
+            }
+        }
 
         $products = $query->latest()->get();
         $categories = Category::with('children')->whereNull('parent_id')->get();
@@ -39,12 +39,12 @@ if (session()->has('category_filter_ids')) {
     {
         $query = TimeProduct::with(['user', 'category'])->where('is_active', true);
 
-if (session()->has('category_filter_ids')) {
-    $categoryIds = session('category_filter_ids');
-    if (!empty($categoryIds)) {
-        $query->whereIn('category_id', $categoryIds);
-    }
-}
+        if (session()->has('category_filter_ids')) {
+            $categoryIds = session('category_filter_ids');
+            if (!empty($categoryIds)) {
+                $query->whereIn('category_id', $categoryIds);
+            }
+        }
 
         $products = $query->latest()->get();
         $categories = Category::with('children')->whereNull('parent_id')->get();

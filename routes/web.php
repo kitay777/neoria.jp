@@ -22,6 +22,18 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TimeProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionFilterController;
+use App\Http\Controllers\TimeProductApplicationController;
+
+
+Route::post('/time-products/{timeProduct}/apply', [\App\Http\Controllers\TimeProductPurchaseController::class, 'apply'])
+    ->name('time-products.apply')->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/my/time-product-applications', [TimeProductApplicationController::class, 'myApplications'])
+        ->name('time-products.applications.mine');
+});
+
 
 Route::post('/session/category-filter', [SessionFilterController::class, 'set'])->name('session.setCategoryFilter');
 

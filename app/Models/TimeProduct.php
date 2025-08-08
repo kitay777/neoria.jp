@@ -14,15 +14,13 @@ class TimeProduct extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'trade_types' => 'array',
+    ];
+
     protected $fillable = [
-        'user_id',
-        'title',
-        'description',
-        'image_path', 
-        'price',
-        'duration',
-        'category_id',
-        'is_active',
+        'user_id','title','description','image_path','price','duration',
+        'category_id','is_active','trade_types','prefecture',
     ];
 
     public function user()
@@ -33,6 +31,12 @@ class TimeProduct extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function applications()
+    {
+        return $this->hasMany(\App\Models\TimeProductApplication::class, 'time_product_id');
+    }
+
+
 
 
 }

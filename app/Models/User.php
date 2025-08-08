@@ -61,6 +61,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Category::class);
     }
+    public function timeProductApplications()
+    {
+        return $this->hasMany(\App\Models\TimeProductApplication::class);
+    }
+
 
 
 }

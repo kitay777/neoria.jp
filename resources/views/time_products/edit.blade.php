@@ -98,6 +98,66 @@
                 <div class="text-red-600">{{ $message }}</div>
             @enderror
 
+            {{-- 取引形式 --}}
+            @php
+                $tradeTypes = [
+                    'in_person' => '対面',
+                    'online'    => 'オンライン',
+                    'phone'     => '電話',
+                    'message'   => 'メッセージ',
+                ];
+                // old優先。なければモデルのJSONカラム（配列）を使用
+                $selectedTradeTypes = old('trade_types', $timeProduct->trade_types ?? []);
+            @endphp
+
+            <div>
+                <label class="block font-semibold">取引形式</label>
+                <div class="flex flex-wrap gap-3 mt-2">
+                    @foreach ($tradeTypes as $key => $label)
+                        <label class="inline-flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                name="trade_types[]"
+                                value="{{ $key }}"
+                                class="rounded"
+                                @checked(is_array($selectedTradeTypes) && in_array($key, $selectedTradeTypes))
+                            >
+                            <span>{{ $label }}</span>
+                        </label>
+                    @endforeach
+                </div>
+                @error('trade_types') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- 取引場所（都道府県） --}}
+            @php
+                $prefectures = [
+                    '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
+                    '茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県',
+                    '新潟県','富山県','石川県','福井県','山梨県','長野県',
+                    '岐阜県','静岡県','愛知県','三重県',
+                    '滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県',
+                    '鳥取県','島根県','岡山県','広島県','山口県',
+                    '徳島県','香川県','愛媛県','高知県',
+                    '福岡県','佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県',
+                    '沖縄県',
+                ];
+                $selectedPref = old('prefecture', $timeProduct->prefecture ?? '');
+            @endphp
+
+            <div>
+                <label class="block font-semibold">取引場所（都道府県）</label>
+                <select name="prefecture" class="w-full border rounded p-2">
+                    <option value="">選択してください</option>
+                    @foreach ($prefectures as $pref)
+                        <option value="{{ $pref }}" @selected($selectedPref === $pref)>{{ $pref }}</option>
+                    @endforeach
+                </select>
+                @error('prefecture') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+
+
             {{-- 公開状態 --}}
             <div>
                 <label class="inline-flex items-center">

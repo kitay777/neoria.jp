@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PointLog;
 use Illuminate\Http\Request;
+use App\Models\TimeProductApplication;
+
 
 class PointLogController extends Controller
 {

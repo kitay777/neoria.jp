@@ -21,7 +21,6 @@ class TimeProductController extends Controller
     public function index()
     {
         $query = TimeProduct::with(['user', 'category'])->where('user_id', auth()->id());;
-
         if (session()->has('category_filter_ids')) {
             $categoryIds = session('category_filter_ids');
             if (!empty($categoryIds)) {
